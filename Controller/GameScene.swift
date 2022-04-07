@@ -33,6 +33,10 @@ public class GameScene: SKScene, AutoLayout {
         let aircraft2 = OtherAircraft(type: .pilot, direction: .right)
         let aircraft3 = OtherAircraft(type: .freighter, direction: .left)
         
+        self.aircraft.append(aircraft1)
+        self.aircraft.append(aircraft2)
+        self.aircraft.append(aircraft3)
+        
         aircraft1.position.x += 100
         aircraft2.position.x -= 100
         aircraft3.position.x += 100
@@ -59,6 +63,10 @@ public class GameScene: SKScene, AutoLayout {
     
     public override func update(_ currentTime: TimeInterval) {
         self.interativeChat?.update(dt: currentTime)
+        self.cameraNode?.position.y += 2
+        for aircraft in self.aircraft {
+            aircraft.update(dt: currentTime)
+        }
     }
     
     

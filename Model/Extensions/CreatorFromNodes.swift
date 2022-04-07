@@ -56,7 +56,7 @@ extension GameScene {
     public func createPilot() -> SKSpriteNode {
         let pilot = Pilot(type: .pilot)
         
-        pilot.position.y -= 160
+        pilot.position.y -= height * 0.3
         
         return pilot
         

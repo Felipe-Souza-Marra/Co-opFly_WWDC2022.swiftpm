@@ -1,4 +1,5 @@
 import SpriteKit
+import SwiftUI
 
 public enum TypeAircraft: Int {
     

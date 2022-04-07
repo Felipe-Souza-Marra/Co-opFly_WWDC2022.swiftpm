@@ -2,11 +2,13 @@ import SpriteKit
 
 //MARK: Aircraft
 
-protocol Aircraft: AnyObject {
+protocol Aircraft: AnyObject, AutoLayout {
     
     func defineType(type: TypeAircraft) -> (texture: SKTexture, size: CGSize)
     
     func addPhysics(texture: SKTexture, size: CGSize) -> SKPhysicsBody
+    
+    func defineVelocity(type: TypeAircraft) -> CGFloat
     
 }
 
@@ -29,10 +31,8 @@ extension Aircraft {
             size = texture.size()
         }
         
-        dump(size)
-        
-        size.height = size.height / 3
-        size.width = size.width / 3
+        size.height = size.height * (height / 2200)
+        size.width = size.width * (height / 2200)
         
         return (texture, size)
         
@@ -48,6 +48,23 @@ extension Aircraft {
         body.isDynamic = false
         
         return body
+    }
+    
+    public func defineVelocity(type: TypeAircraft) -> CGFloat {
+        
+        let velocity: CGFloat
+        
+        switch type {
+        case .pilot:
+            velocity =  6 * (height / 1366)
+        case .airplane:
+            velocity =  4 * (height / 1366)
+        case .freighter:
+            velocity =  3 * (height / 1366)
+        }
+        
+        return velocity
+        
     }
     
 }
