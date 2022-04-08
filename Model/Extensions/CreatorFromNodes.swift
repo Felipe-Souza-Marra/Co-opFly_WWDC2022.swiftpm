@@ -1,4 +1,5 @@
 import SpriteKit
+import GameplayKit
 
 //MARK: SKCameraNode
 
@@ -56,9 +57,39 @@ extension GameScene {
     public func createPilot() -> SKSpriteNode {
         let pilot = Pilot(type: .pilot)
         
+        self.pilot = pilot
+        
         pilot.position.y -= height * 0.3
         
         return pilot
+        
+    }
+    
+    public func createOtherAircraft() -> OtherAircraft {
+        
+        let aircraft: OtherAircraft
+        let type: TypeAircraft
+        let direction: Direction
+        
+        switch self.returnIntRandom() {
+        case 0...50:
+            direction = .left
+        default:
+            direction = .right
+        }
+        
+        switch self.returnIntRandom() {
+        case 0...10:
+            type = .pilot
+        case 11...60:
+            type = .airplane
+        default:
+            type = .freighter
+        }
+        
+        aircraft = OtherAircraft(type: type, direction: direction)
+        
+        return aircraft
         
     }
     

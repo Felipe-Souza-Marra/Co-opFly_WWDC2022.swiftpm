@@ -31,6 +31,7 @@ public class InteractiveChat: SKSpriteNode {
             }
             else if waitMessageSender!.message.first != "." {
                 waitMessageSender!.message = "..."
+                waitMessageSender?.completeDialogue = false
             }
         case .reciver:
             if waitMessageReciver ==  nil {
@@ -38,6 +39,7 @@ public class InteractiveChat: SKSpriteNode {
             }
             else if waitMessageReciver!.message.first != "." {
                 waitMessageReciver!.message = "..."
+                waitMessageSender?.completeDialogue = false
             }
         }
         
@@ -49,6 +51,9 @@ public class InteractiveChat: SKSpriteNode {
         }
         
         if message.message.isEmpty {
+            if message.completeDialogue {
+                message.action()
+            }
             removeMessage(message.type)
         } else if !(message.inserted)  {
             message.inserted = true

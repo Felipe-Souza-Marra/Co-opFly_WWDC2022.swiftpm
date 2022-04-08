@@ -40,6 +40,8 @@ public class Command: SKLabelNode {
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.checkState()
         
+        let text: String = "E loko só o basico ne Andy?"
+        
         if let parent = self.parent as? Commands {
             switch self.type {
             case .up:
@@ -60,6 +62,19 @@ public class Command: SKLabelNode {
                 }
             }
         }
+        
+        self.callCommand(text: text)
+        
+    }
+    
+    private func callCommand(text: String) {
+        
+        guard let scene = self.scene as? GameScene else { return }
+        
+        scene.interativeChat?.addTransmission(Transmission(.sender, message: text, action: {
+            scene.pilot?.executeAction(type: self.type, actived: self.text!)
+        }))
+        
     }
     
     public func checkState() {

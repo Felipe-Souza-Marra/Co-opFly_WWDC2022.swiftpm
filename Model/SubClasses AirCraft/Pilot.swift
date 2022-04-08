@@ -22,6 +22,41 @@ public class Pilot: SKSpriteNode, Aircraft {
         self.velocity = self.defineVelocity(type: type)
     }
     
+    public func executeAction(type: CommandType, actived: String) {
+        
+        switch type {
+        case .up:
+            if actived != "Normal speed" {
+                self.velocity = 6 * (height / 1366)
+            }
+            else {
+                self.velocity = 1.5 * (6 * (height / 1366))
+            }
+        case .down:
+            if actived != "Normal speed" {
+                self.velocity = 6 * (height / 1366)
+            }
+            else {
+                self.velocity = 1.5 * (6 * (height / 1366))
+            }
+        case .left:
+            if actived != "Center" {
+                self.run(.moveTo(x: 0, duration: 0.5))
+            }
+            else {
+                self.run(.moveTo(x: -(width * 0.25) , duration: 0.5))
+            }
+        case .right:
+            if actived != "Center" {
+                self.run(.moveTo(x: 0, duration: 0.5))
+            }
+            else {
+                self.run(.moveTo(x: width * 0.25 , duration: 0.5))
+            }
+        }
+        
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

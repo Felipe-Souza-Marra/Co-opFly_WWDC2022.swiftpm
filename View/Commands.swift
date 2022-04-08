@@ -2,7 +2,7 @@ import SpriteKit
 
 public class Commands: SKSpriteNode {
     
-    var up: Command = Command("Accelerate now", type: CommandType.up )
+    var up: Command = Command("Accelerate now", type: CommandType.up)
     var down: Command = Command("Slow down now", type: CommandType.down)
     var left: Command = Command("Turn left", type: CommandType.left)
     var right: Command = Command("Turn right", type: CommandType.right)

@@ -24,6 +24,10 @@ public class Transmission: SKSpriteNode {
     
     var inserted: Bool = false
     
+    var completeDialogue: Bool = true
+    
+    var action: (() -> Void)
+    
     var type: TypeTrasmisson
 
     //MARK: Variável para construção
@@ -51,11 +55,13 @@ public class Transmission: SKSpriteNode {
     }()
 
 
-    public init(_ type :TypeTrasmisson, message: String) {
+    public init(_ type :TypeTrasmisson, message: String, action: @escaping (() -> Void)) {
         
         self.type = type
         
         self.message = message
+        
+        self.action = action
         
         super.init(texture: nil,color: .clear, size: CGSize(width: 0, height: 0))
         
