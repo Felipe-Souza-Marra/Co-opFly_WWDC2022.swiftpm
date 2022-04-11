@@ -1,6 +1,6 @@
 import SpriteKit
 
-public class Background: SKSpriteNode, AutoLayout {
+public class Background: SKSpriteNode {
     
     public override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)

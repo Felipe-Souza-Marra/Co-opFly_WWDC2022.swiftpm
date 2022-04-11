@@ -29,10 +29,13 @@ extension Aircraft {
         case .freighter:
             texture = SKTexture(imageNamed: "Aeronave/Aeronave3")
             size = texture.size()
+            dump(size)
         }
         
-        size.height = size.height * (height / 2200)
-        size.width = size.width * (height / 2200)
+        let widthMultiplier = width / 1858
+        
+        size.height = size.height * widthMultiplier
+        size.width = size.width * widthMultiplier
         
         return (texture, size)
         
@@ -41,11 +44,10 @@ extension Aircraft {
     public func addPhysics(texture: SKTexture, size: CGSize) -> SKPhysicsBody {
         let body = SKPhysicsBody(texture: texture, size: size)
         
-        body.isDynamic = false
         body.categoryBitMask = CategoryMaskPhysics.smallAircraft
         body.contactTestBitMask = CategoryMaskPhysics.smallAircraft + CategoryMaskPhysics.mediumAircraft + CategoryMaskPhysics.bigAircraft
         body.collisionBitMask = 0
-        body.isDynamic = false
+        body.affectedByGravity = false
         
         return body
     }
@@ -56,11 +58,11 @@ extension Aircraft {
         
         switch type {
         case .pilot:
-            velocity =  6 * (height / 1366)
+            velocity =  Velocity.pilot * (height / 1366)
         case .airplane:
-            velocity =  4 * (height / 1366)
+            velocity =  Velocity.airplane * (height / 1366)
         case .freighter:
-            velocity =  3 * (height / 1366)
+            velocity =  Velocity.freighter * (height / 1366)
         }
         
         return velocity

@@ -22,6 +22,8 @@ public class Transmission: SKSpriteNode {
     
     var message: String
     
+    var typeCommand: CommandType
+    
     var inserted: Bool = false
     
     var completeDialogue: Bool = true
@@ -29,6 +31,8 @@ public class Transmission: SKSpriteNode {
     var action: (() -> Void)
     
     var type: TypeTrasmisson
+    
+    var oldStates: [CommandState]
 
     //MARK: Variável para construção
 
@@ -49,13 +53,18 @@ public class Transmission: SKSpriteNode {
         bodyMessage.verticalAlignmentMode = .center
         bodyMessage.horizontalAlignmentMode = .right
         bodyMessage.fontSize = UIScreen.main.bounds.size.height * 0.030
+        bodyMessage.fontName = FontsCustom.font1
         bodyMessage.zPosition = ZPositions.message
         
         return bodyMessage
     }()
 
 
-    public init(_ type :TypeTrasmisson, message: String, action: @escaping (() -> Void)) {
+    public init(_ type :TypeTrasmisson, message: String, typeCommand: CommandType, oldStates: [CommandState], action: @escaping (() -> Void)) {
+        
+        self.oldStates = oldStates
+        
+        self.typeCommand = typeCommand
         
         self.type = type
         
@@ -96,7 +105,7 @@ public class Transmission: SKSpriteNode {
     func update(dt: TimeInterval) {
         
         timer += 1
-        if (timer%10 == 0) && !(message.isEmpty) {
+        if (timer%4 == 0) && !(message.isEmpty) {
           animateText()
         }
         

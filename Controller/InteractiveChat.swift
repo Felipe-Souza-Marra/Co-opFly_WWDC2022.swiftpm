@@ -2,9 +2,9 @@ import SpriteKit
 
 public class InteractiveChat: SKSpriteNode {
     
-    private var waitMessageReciver: Transmission?
+    var waitMessageReciver: Transmission?
     
-    private var waitMessageSender: Transmission?
+    var waitMessageSender: Transmission?
     
     private var messagesInChat: [Transmission?] = []
     
@@ -32,6 +32,13 @@ public class InteractiveChat: SKSpriteNode {
             else if waitMessageSender!.message.first != "." {
                 waitMessageSender!.message = "..."
                 waitMessageSender?.completeDialogue = false
+                guard let scene = self.scene as? GameScene else { return }
+                if let commands = scene.hud?.childNode(withName: "Commands") as? Commands {
+                    print("Aqui foi")
+                    commands.down.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
+                    commands.left.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
+                    commands.right.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
+                }
             }
         case .reciver:
             if waitMessageReciver ==  nil {
@@ -39,7 +46,7 @@ public class InteractiveChat: SKSpriteNode {
             }
             else if waitMessageReciver!.message.first != "." {
                 waitMessageReciver!.message = "..."
-                waitMessageSender?.completeDialogue = false
+                waitMessageReciver?.completeDialogue = false
             }
         }
         
@@ -66,8 +73,6 @@ public class InteractiveChat: SKSpriteNode {
     }
     
     public func controlChat(_ transmission: Transmission) {
-        
-        dump(messagesInChat)
         
         switch self.messagesInChat.count {
         case 0:
@@ -116,6 +121,7 @@ public class InteractiveChat: SKSpriteNode {
     public func update(dt: TimeInterval) {
         
         self.controlMessage(self.waitMessageReciver, dt: dt)
+                            
         self.controlMessage(self.waitMessageSender, dt: dt)
         
     }

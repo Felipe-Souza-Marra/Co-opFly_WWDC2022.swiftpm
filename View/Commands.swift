@@ -2,7 +2,7 @@ import SpriteKit
 
 public class Commands: SKSpriteNode {
     
-    var up: Command = Command("Accelerate now", type: CommandType.up)
+//    var up: Command = Command("Accelerate now", type: CommandType.up)
     var down: Command = Command("Slow down now", type: CommandType.down)
     var left: Command = Command("Turn left", type: CommandType.left)
     var right: Command = Command("Turn right", type: CommandType.right)
@@ -11,15 +11,19 @@ public class Commands: SKSpriteNode {
         
         super.init(texture: texture, color: color, size: size)
         
+        self.name = "Commands"
+        
         self.zPosition = ZPositions.hud
         
-        self.up.position.y += UIScreen.main.bounds.size.height * 0.045
-        self.down.position.y -= UIScreen.main.bounds.size.height * 0.045
+//        self.up.position.y += UIScreen.main.bounds.size.height * 0.045
+        self.down.position.y += UIScreen.main.bounds.size.height * 0.05
+        self.right.position.y += UIScreen.main.bounds.size.height * 0.005
+        self.left.position.y += UIScreen.main.bounds.size.height * 0.005
         
         self.right.position.x += UIScreen.main.bounds.size.width * 0.3
         self.left.position.x -= UIScreen.main.bounds.size.width * 0.3
         
-        self.addChild(self.up)
+//        self.addChild(self.up)
         self.addChild(self.down)
         self.addChild(self.left)
         self.addChild(self.right)

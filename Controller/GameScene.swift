@@ -8,6 +8,8 @@ public class GameScene: SKScene, AutoLayout, Randomness {
     
     var hud: HUD?
     
+    var commands: Commands?
+    
     var cameraNode: SKCameraNode?
     
     var interativeChat: InteractiveChat?
@@ -16,8 +18,16 @@ public class GameScene: SKScene, AutoLayout, Randomness {
     
     var aircraft: [OtherAircraft] = []
     
+    var timer: Int = 74 {
+        
+        didSet {
+            self.updateScene(dt: timer)
+        }
+        
+    }
+    
     public override init(size: CGSize) {
-        self.randomness = GKRandomDistribution(lowestValue: 0, highestValue: 100)
+        self.randomness = GKRandomDistribution(lowestValue: 1, highestValue: 100)
         super.init(size: size)
     }
     
@@ -26,6 +36,8 @@ public class GameScene: SKScene, AutoLayout, Randomness {
     }
     
     public override func sceneDidLoad() {
+        super.sceneDidLoad()
+        self.backgroundColor = .clear
         
         self.physicsWorld.contactDelegate = self
         
@@ -37,16 +49,46 @@ public class GameScene: SKScene, AutoLayout, Randomness {
         
     }
     
+    public override func didMove(to view: SKView) {
+        self.commands?.down.setCanBeTight(true)
+        self.commands?.left.setCanBeTight(true)
+        self.commands?.right.setCanBeTight(true)
+    }
+    
     public override func update(_ currentTime: TimeInterval) {
         self.interativeChat?.update(dt: currentTime)
-        self.cameraNode?.position.y += self.pilot?.velocity ?? 0
+        self.cameraNode?.run(.moveTo(y: self.cameraNode!.position.y + self.pilot!.velocity!, duration: 0))
         
         for aircraft in self.aircraft {
             aircraft.update(dt: currentTime)
         }
         
+        self.timer += 1;
+        
     }
     
-    
+    public func updateScene(dt: Int) {
+        
+        switch (dt % 175) {
+        case 75:
+            addChild(self.createCloud() as! SKNode)
+            addChild(self.createOtherAircraft())
+        case 125:
+            enumerateChildNodes(withName: "Cloud") { (node, _) in
+                if let cloud = node as? CloudAbove {
+                    cloud.offScreen()
+                }
+            }
+        case 175:
+            enumerateChildNodes(withName: "OtherAircraft") { (node, _) in
+                if let cloud = node as? OtherAircraft {
+                    cloud.offScreen()
+                }
+            }
+        default:
+            break
+        }
+        
+    }
     
 }

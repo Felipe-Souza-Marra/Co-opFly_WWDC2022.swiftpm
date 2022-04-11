@@ -37,6 +37,8 @@ extension GameScene {
         
         let commands = Commands(texture: nil, color: UIColor.black, size: CGSize(width: width, height: height * 0.15))
         
+        self.commands = commands
+        
         hud.add(commands, x: 0 , y: -(height/2) + commands.size.height/2)
         
         //Adicionando Piloto
@@ -72,14 +74,14 @@ extension GameScene {
         let direction: Direction
         
         switch self.returnIntRandom() {
-        case 0...50:
+        case 1...50:
             direction = .left
         default:
             direction = .right
         }
         
         switch self.returnIntRandom() {
-        case 0...10:
+        case 1...10:
             type = .pilot
         case 11...60:
             type = .airplane
@@ -89,7 +91,46 @@ extension GameScene {
         
         aircraft = OtherAircraft(type: type, direction: direction)
         
+        switch type {
+        case .pilot:
+            aircraft.body?.categoryBitMask = CategoryMaskPhysics.smallAircraft
+        case .airplane:
+            aircraft.body?.categoryBitMask = CategoryMaskPhysics.mediumAircraft
+        case .freighter:
+            aircraft.body?.categoryBitMask = CategoryMaskPhysics.bigAircraft
+        }
+        
+        let x: CGFloat , y: CGFloat
+        
+        switch self.returnIntRandom() {
+        case 1...20:
+            x = width * 0.5 * -(aircraft.direction!)
+            y = (self.cameraNode?.position.y)! + height * 0.5
+        case 21...60:
+            x = width * 0.5 * -(aircraft.direction!) * 1.5
+            y = (self.cameraNode?.position.y)! + height * 0.7
+        default:
+            x = width * 0.5 * -(aircraft.direction!) * 1.2
+            y = (self.cameraNode?.position.y)! + height * 0.6
+        }
+        
+        aircraft.position = CGPoint(x: x, y: y)
+        
+        self.aircraft.append(aircraft)
+        
         return aircraft
+        
+    }
+    
+    func createCloud() -> Cloud {
+        
+        let cloud: CloudAbove
+        
+        cloud = CloudAbove()
+        
+        cloud.position.y = cameraNode!.position.y + (height * 0.8) + (cloud.size.height/2)
+        
+        return cloud
         
     }
     

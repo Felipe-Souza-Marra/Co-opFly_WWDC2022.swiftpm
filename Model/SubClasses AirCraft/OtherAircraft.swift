@@ -11,6 +11,7 @@ public class OtherAircraft: SKSpriteNode, Aircraft {
     public init(type: TypeAircraft, direction: Direction) {
         
         super.init(texture: nil, color: .clear, size: CGSize(width: 0, height: 0))
+        self.name = "OtherAircraft"
         
         self.direction = self.defineDirection(direction: direction)
         
@@ -23,6 +24,8 @@ public class OtherAircraft: SKSpriteNode, Aircraft {
         self.size = image.size
         
         self.body = self.addPhysics(texture: self.texture!, size: self.size)
+        
+        self.physicsBody = body
         
         self.zPosition = ZPositions.aircraft
         
@@ -45,8 +48,19 @@ public class OtherAircraft: SKSpriteNode, Aircraft {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func offScreen() {
+        guard let scene = scene as? GameScene else { return }
+        
+        if scene.camera!.position.y > (self.position.y + ((self.width * 0.8) + self.size.height/2)) {
+            
+            self.removeFromParent()
+            scene.aircraft.removeFirst()
+            
+        }
+    }
+    
     func update(dt: TimeInterval) {
-        self.position.x += (velocity! * direction!)
+        self.run(.moveTo(x: self.position.x + (velocity! * direction!), duration: 0))
     }
     
 }
