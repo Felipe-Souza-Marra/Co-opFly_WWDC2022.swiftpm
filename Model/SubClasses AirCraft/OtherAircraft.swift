@@ -29,6 +29,18 @@ public class OtherAircraft: SKSpriteNode, Aircraft {
         
         self.zPosition = ZPositions.aircraft
         
+        self.addChild(self.addAudio())
+        
+    }
+    
+    public func addAudio() -> SKAudioNode {
+        let audio = SKAudioNode(fileNamed: "AudioAeronave.wav")
+        
+        audio.autoplayLooped = true
+        audio.isPositional = true
+        audio.run(.changeVolume(by: 0.2, duration: 0))
+        
+        return audio
     }
     
     private func defineDirection(direction: Direction) -> CGFloat {

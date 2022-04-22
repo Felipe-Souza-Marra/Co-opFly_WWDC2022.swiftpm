@@ -61,7 +61,7 @@ extension GameScene {
         
         self.pilot = pilot
         
-        pilot.position.y -= height * 0.3
+        pilot.position.y -= height * 0.7
         
         return pilot
         
@@ -81,9 +81,7 @@ extension GameScene {
         }
         
         switch self.returnIntRandom() {
-        case 1...10:
-            type = .pilot
-        case 11...60:
+        case 1...50:
             type = .airplane
         default:
             type = .freighter

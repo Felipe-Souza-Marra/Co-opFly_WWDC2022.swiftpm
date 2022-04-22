@@ -23,6 +23,18 @@ public class Pilot: SKSpriteNode, Aircraft {
         
         self.velocity = self.defineVelocity(type: type)
         
+        self.addChild(self.addAudio())
+        
+    }
+    
+    public func addAudio() -> SKAudioNode {
+        let audio = SKAudioNode(fileNamed: "AudioAeronave.wav")
+        
+        audio.autoplayLooped = true
+        audio.isPositional = true
+        audio.run(.changeVolume(by: 0.01, duration: 0))
+        
+        return audio
     }
     
     public func executeAction(type: CommandType, actived: String) {
@@ -43,7 +55,7 @@ public class Pilot: SKSpriteNode, Aircraft {
                     self.velocity = Velocity.pilot * (height / 1366)
                 }
                 else {
-                    self.velocity = 0.875 * (Velocity.pilot * (height / 1366))
+                    self.velocity = 0.8 * (Velocity.pilot * (height / 1366))
                 }
             case .left:
                 if actived != "Center" {
@@ -51,7 +63,7 @@ public class Pilot: SKSpriteNode, Aircraft {
                 }
                 else {
                     if (commands.right.isOnState() == .on) {
-                        self.run(.moveTo(x: -(width * 0.25) , duration: 1))
+                        self.run(.moveTo(x: -(width * 0.25) , duration: 1.5))
                     } else {
                         self.run(.moveTo(x: -(width * 0.25) , duration: 0.5))
                     }
@@ -62,12 +74,14 @@ public class Pilot: SKSpriteNode, Aircraft {
                 }
                 else {
                     if (commands.left.isOnState() == .on) {
-                        self.run(.moveTo(x: width * 0.25 , duration: 1))
+                        self.run(.moveTo(x: width * 0.25 , duration: 1.5))
                     } else {
                         self.run(.moveTo(x: width * 0.25 , duration: 0.5))
                     }
                     
                 }
+            case .pilot:
+                break
             }
         }
         

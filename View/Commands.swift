@@ -3,11 +3,14 @@ import SpriteKit
 public class Commands: SKSpriteNode {
     
 //    var up: Command = Command("Accelerate now", type: CommandType.up)
-    var down: Command = Command("Slow down now", type: CommandType.down)
-    var left: Command = Command("Turn left", type: CommandType.left)
-    var right: Command = Command("Turn right", type: CommandType.right)
-    
+    var down: Command
+    var left: Command
+    var right: Command
     public override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        
+        self.down = Command("Slow down now", type: CommandType.down, size: CGSize(width: size.width * 0.4, height: size.height))
+        self.left = Command("Turn left", type: CommandType.left, size: CGSize(width: size.width * 0.3, height: size.height))
+        self.right = Command("Turn right", type: CommandType.right, size: CGSize(width: size.width * 0.3, height: size.height))
         
         super.init(texture: texture, color: color, size: size)
         
@@ -15,13 +18,8 @@ public class Commands: SKSpriteNode {
         
         self.zPosition = ZPositions.hud
         
-//        self.up.position.y += UIScreen.main.bounds.size.height * 0.045
-        self.down.position.y += UIScreen.main.bounds.size.height * 0.05
-        self.right.position.y += UIScreen.main.bounds.size.height * 0.005
-        self.left.position.y += UIScreen.main.bounds.size.height * 0.005
-        
-        self.right.position.x += UIScreen.main.bounds.size.width * 0.3
-        self.left.position.x -= UIScreen.main.bounds.size.width * 0.3
+        self.right.position.x += UIScreen.main.bounds.size.width * 0.35
+        self.left.position.x -= UIScreen.main.bounds.size.width * 0.35
         
 //        self.addChild(self.up)
         self.addChild(self.down)

@@ -14,7 +14,9 @@ public class InteractiveChat: SKSpriteNode {
         let background = SKShapeNode(rectOf: self.size)
         
         background.fillColor = .black
-        background.alpha = 0.2
+        background.alpha = 0.3
+        background.zPosition = ZPositions.interactiveChat
+        background.strokeColor = .clear
         
         self.addChild(background)
         
@@ -27,14 +29,28 @@ public class InteractiveChat: SKSpriteNode {
         switch transmission.type {
         case .sender:
             if waitMessageSender ==  nil {
-                waitMessageSender = transmission
+                if messagesInChat.count == 2 {
+                    self.messagesInChat[0]!.run(.moveTo(y: self.messagesInChat[0]!.position.y + self.messagesInChat[0]!.circleWithImage.frame.size.height * 1.8, duration: 0.2))
+                    
+                    self.messagesInChat[1]!.run(.moveTo(y: self.messagesInChat[1]!.position.y + self.messagesInChat[1]!.circleWithImage.frame.size.height * 1.2, duration: 0.2)){
+                        transmission.position.y -= transmission.circleWithImage.frame.size.height * 0.6
+                        self.messagesInChat.append(transmission)
+                        self.waitMessageSender = transmission
+                        self.addChild(transmission)
+                        
+                        self.messagesInChat[0]!.removeFromParent()
+                        self.messagesInChat.removeFirst()
+                        
+                    }
+                } else {
+                    waitMessageSender = transmission
+                }
             }
             else if waitMessageSender!.message.first != "." {
                 waitMessageSender!.message = "..."
                 waitMessageSender?.completeDialogue = false
                 guard let scene = self.scene as? GameScene else { return }
                 if let commands = scene.hud?.childNode(withName: "Commands") as? Commands {
-                    print("Aqui foi")
                     commands.down.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
                     commands.left.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
                     commands.right.setOnState(onState: waitMessageSender!.oldStates.removeFirst())
@@ -42,7 +58,22 @@ public class InteractiveChat: SKSpriteNode {
             }
         case .reciver:
             if waitMessageReciver ==  nil {
-                waitMessageReciver = transmission
+                if messagesInChat.count == 2 {
+                    self.messagesInChat[0]!.run(.moveTo(y: self.messagesInChat[0]!.position.y + self.messagesInChat[0]!.circleWithImage.frame.size.height * 1.8, duration: 0.2))
+                    
+                    self.messagesInChat[1]!.run(.moveTo(y: self.messagesInChat[1]!.position.y + self.messagesInChat[1]!.circleWithImage.frame.size.height * 1.2, duration: 0.2)){
+                        transmission.position.y -= transmission.circleWithImage.frame.size.height * 0.6
+                        self.messagesInChat.append(transmission)
+                        self.waitMessageReciver = transmission
+                        self.addChild(transmission)
+                        
+                        self.messagesInChat[0]!.removeFromParent()
+                        self.messagesInChat.removeFirst()
+                        
+                    }
+                } else {
+                    waitMessageReciver = transmission
+                }
             }
             else if waitMessageReciver!.message.first != "." {
                 waitMessageReciver!.message = "..."
@@ -88,19 +119,6 @@ public class InteractiveChat: SKSpriteNode {
             addChild(transmission)
             
         default:
-            
-            self.messagesInChat[0]!.run(.moveTo(y: self.messagesInChat[0]!.position.y + self.messagesInChat[0]!.circleWithImage.frame.size.height * 1.8, duration: 0.5))
-            
-            self.messagesInChat[1]!.run(.moveTo(y: self.messagesInChat[1]!.position.y + self.messagesInChat[1]!.circleWithImage.frame.size.height * 1.2, duration: 0.5)){
-                transmission.position.y -= transmission.circleWithImage.frame.size.height * 0.6
-                self.messagesInChat.append(transmission)
-                self.addChild(transmission)
-                
-                self.messagesInChat[0]!.removeFromParent()
-                self.messagesInChat.removeFirst()
-                
-            }
-            
             break
             
         }

@@ -20,7 +20,19 @@ public class Transmission: SKSpriteNode {
     
     var timer: Int = 0
     
-    var message: String
+    var message: String {
+        
+        didSet {
+            
+            if message.count == 0 {
+                self.legendSong.run(.stop())
+            }
+            
+        }
+        
+    }
+    
+    var legendSong: SKAudioNode
     
     var typeCommand: CommandType
     
@@ -72,26 +84,39 @@ public class Transmission: SKSpriteNode {
         
         self.action = action
         
+        switch type {
+        case .reciver:
+            self.legendSong = SKAudioNode(fileNamed: "Som_legenda_2.mp3")
+        case .sender:
+            self.legendSong = SKAudioNode(fileNamed: "Som_legenda_1.mp3")
+        }
+        
+        
         super.init(texture: nil,color: .clear, size: CGSize(width: 0, height: 0))
         
         switch type {
         case .sender:
-            image = SKTexture(imageNamed: "Algo")
+            image = SKTexture(imageNamed: "Icon/TowerIcon")
+            self.circleWithImage.fillTexture = image
             self.circleWithImage.position.x = UIScreen.main.bounds.size.width * 0.45
             self.bodyMessage.horizontalAlignmentMode = .right
             self.bodyMessage.position.x = circleWithImage.position.x - (circleWithImage.frame.size.width * 0.65)
-            
+            self.legendSong.run(.changeVolume(by: 20, duration: 0))
         case .reciver:
-            image = SKTexture(imageNamed: "Algo")
+            image = SKTexture(imageNamed: "Icon/PilotIcon")
+            self.circleWithImage.fillTexture = image
             self.circleWithImage.position.x = -(UIScreen.main.bounds.size.width * 0.45)
             self.bodyMessage.horizontalAlignmentMode = .left
             self.bodyMessage.position.x = circleWithImage.position.x + (circleWithImage.frame.size.width * 0.65)
+            self.legendSong.run(.changeVolume(by: 20, duration: 0))
         }
-        
+        self.circleWithImage.addChild(SKSpriteNode(texture: image, color: .clear, size: self.circleWithImage.frame.size))
         self.addChild(circleWithImage)
         self.addChild(bodyMessage)
         
-    
+        self.addChild(self.legendSong)
+        
+        self.legendSong.autoplayLooped = true
         self.bodyMessage.text = ""
         
     }
@@ -105,8 +130,8 @@ public class Transmission: SKSpriteNode {
     func update(dt: TimeInterval) {
         
         timer += 1
-        if (timer%4 == 0) && !(message.isEmpty) {
-          animateText()
+        if (timer%6 == 0) && !(message.isEmpty) {
+            animateText()
         }
         
     }

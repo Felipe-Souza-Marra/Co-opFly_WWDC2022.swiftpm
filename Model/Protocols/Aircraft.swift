@@ -29,7 +29,6 @@ extension Aircraft {
         case .freighter:
             texture = SKTexture(imageNamed: "Aeronave/Aeronave3")
             size = texture.size()
-            dump(size)
         }
         
         let widthMultiplier = width / 1858

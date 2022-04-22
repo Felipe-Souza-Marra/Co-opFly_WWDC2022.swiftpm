@@ -6,6 +6,7 @@ public enum CommandType {
     case down
     case left
     case right
+    case pilot
     
 }
 
@@ -16,7 +17,9 @@ public enum CommandState {
     
 }
 
-public class Command: SKLabelNode {
+public class Command: SKSpriteNode {
+    
+    private var label: SKLabelNode
     
     private var onState: CommandState {
         
@@ -24,13 +27,16 @@ public class Command: SKLabelNode {
             switch self.onState {
             case .on:
                 if type == .up || type == .down {
-                    self.text = "Normal speed"
+                    self.label.text = "Normal speed"
+                    self.changeString()
                 }
                 else {
-                    self.text = "Center"
+                    self.label.text = "Center"
+                    self.changeString()
                 }
             case .off:
-                self.text = command
+                self.label.text = command
+                self.changeString()
             }
         }
         
@@ -52,7 +58,7 @@ public class Command: SKLabelNode {
     
     private var type: CommandType
     
-    public init(_ command: String, type: CommandType) {
+    public init(_ command: String, type: CommandType, size: CGSize) {
         
         self.onState = .off
         
@@ -60,21 +66,47 @@ public class Command: SKLabelNode {
         
         self.type = type
         
-        super.init()
+        self.label = SKLabelNode()
+        
+        super.init(texture: nil, color: .clear, size: size)
         
         self.alpha = 0
         
-        self.fontSize = UIScreen.main.bounds.size.height * 0.035
+        self.label.fontSize = UIScreen.main.bounds.size.height * 0.035
         
-        self.fontName = FontsCustom.font1
+        self.label.fontName = FontsCustom.font1
         
-        self.zPosition = ZPositions.hud
+        self.label.zPosition = ZPositions.hud
         
         self.isUserInteractionEnabled = true
         
-        self.verticalAlignmentMode = .center
+        self.zPosition = ZPositions.hud
         
-        self.text = self.command
+        self.label.verticalAlignmentMode = .center
+        
+        self.label.text = self.command
+        
+        self.changeString()
+        
+        self.label.preferredMaxLayoutWidth = self.size.width * 0.95
+        self.label.lineBreakMode = .byTruncatingMiddle
+        self.label.numberOfLines = 2
+        
+        self.label.fontColor = .white
+        
+        self.addChild(label)
+        
+    }
+    
+    public func changeString() {
+        
+        let attrString = NSMutableAttributedString(string: self.label.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let range = NSRange(location: 0, length: self.label.text!.count)
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
+        attrString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.init(name: FontsCustom.font1, size: height * 0.035)!], range: range)
+        self.label.attributedText = attrString
         
     }
     
@@ -102,6 +134,8 @@ public class Command: SKLabelNode {
             oldStates.append(commands.right.onState)
             
             switch self.type {
+            case .pilot:
+                break
             case .up:
                 
                 //                if self.onState == .off {
@@ -162,7 +196,7 @@ public class Command: SKLabelNode {
         guard let scene = self.scene as? GameScene else { return }
         
         scene.interativeChat?.addTransmission(Transmission(.sender, message: text, typeCommand: self.type, oldStates: oldStates, action: {
-            scene.pilot?.executeAction(type: self.type, actived: self.text!)
+            scene.pilot?.executeAction(type: self.type, actived: self.label.text!)
         }))
         
     }

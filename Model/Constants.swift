@@ -25,7 +25,7 @@ public struct CategoryMaskPhysics {
 public struct Velocity {
     
     public static let pilot: CGFloat = 6
-    public static let airplane: CGFloat = 3
-    public static let freighter: CGFloat = 2
+    public static let airplane: CGFloat = 4
+    public static let freighter: CGFloat = 3
     
 }
