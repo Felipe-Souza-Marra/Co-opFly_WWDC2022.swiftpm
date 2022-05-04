@@ -34,7 +34,7 @@ O alvos primários para a aplicação ir de acordo com objetivo da mensagem fora
 
 - https://www.dafont.com/top-secret-stamp.font
 
-### Aúdio
+### Aúdios
 
 - https://freesound.org/people/nicStage/sounds/127734/
 - https://freesound.org/people/mike_stranks/sounds/397573/
