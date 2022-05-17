@@ -1,6 +1,7 @@
 import SpriteKit
 import UIKit
 
+/// Z position for the nodes.
 public struct ZPositions {
     
     public static let backgroud: CGFloat = 1
@@ -14,6 +15,7 @@ public struct ZPositions {
     
 }
 
+/// Categorization of physical bodies.
 public struct CategoryMaskPhysics {
     
     public static let smallAircraft: UInt32 = 1

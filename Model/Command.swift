@@ -1,5 +1,6 @@
 import SpriteKit
 
+/// Command for the aircraft in the middle.
 public enum CommandType {
     
     case up
@@ -10,6 +11,7 @@ public enum CommandType {
     
 }
 
+/// State it is in.
 public enum CommandState {
     
     case on
@@ -58,6 +60,11 @@ public class Command: SKSpriteNode {
     
     private var type: CommandType
     
+    /// Initializing the element that will give command to the aircraft.
+    /// - Parameters:
+    ///   - command: String when it is in the "off" state.
+    ///   - type: What kind of command it will be.
+    ///   - size: Adjust the size on the screen.
     public init(_ command: String, type: CommandType, size: CGSize) {
         
         self.onState = .off

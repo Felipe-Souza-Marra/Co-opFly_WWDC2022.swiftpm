@@ -14,6 +14,9 @@ protocol Aircraft: AnyObject, AutoLayout {
 
 extension Aircraft {
     
+    /// Setting the plane type to return the texture and size.
+    /// - Parameter type: The aircraft type.
+    /// - Returns: Texture and size.
     public func defineType(type: TypeAircraft) -> (texture: SKTexture, size: CGSize) {
         
         let texture: SKTexture

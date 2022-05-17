@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// This is where all the fonts used are stored, returning their names and confirming to see if they are in the project.
 public struct FontsCustom {
     
     public static let font1: String = {

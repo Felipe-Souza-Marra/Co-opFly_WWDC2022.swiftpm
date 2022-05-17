@@ -6,7 +6,6 @@ extension GameScene: SKPhysicsContactDelegate {
     
     public func didBegin(_ contact: SKPhysicsContact) {
         let node1 = contact.bodyA.node?.name == "Pilot" ? contact.bodyA.node : contact.bodyB.node
-//        let node2 = node1 == contact.bodyA.node ? contact.bodyB.node : contact.bodyA.node
         
         if node1?.name == "Pilot" {
             self.isPaused = true

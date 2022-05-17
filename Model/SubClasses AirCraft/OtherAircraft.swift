@@ -60,6 +60,7 @@ public class OtherAircraft: SKSpriteNode, Aircraft {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Function to remove aircraft.
     func offScreen() {
         guard let scene = scene as? GameScene else { return }
         

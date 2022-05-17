@@ -16,6 +16,7 @@ class CloudAbove: SKSpriteNode, Cloud, Randomness {
     
     var scaleRandom: GKRandomDistribution
     
+    /// Automated builder for the clouds to come randomly.
     init() {
         self.randomInt = GKRandomDistribution(lowestValue: 0, highestValue: 180)
         self.randomness = GKRandomDistribution(lowestValue: 1, highestValue: 100)
@@ -54,6 +55,7 @@ class CloudAbove: SKSpriteNode, Cloud, Randomness {
         
     }
     
+    /// Function for cloud removal.
     func offScreen() {
         
         guard let camera = scene?.camera else { return }

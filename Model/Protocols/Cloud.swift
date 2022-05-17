@@ -19,6 +19,7 @@ protocol Cloud {
 
 extension Cloud {
     
+    /// Returns a rotation for the cloud.
     func rotation() -> CGFloat {
         
         let number: CGFloat = CGFloat(self.randomInt.nextInt())

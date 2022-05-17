@@ -56,6 +56,8 @@ extension GameScene {
 
 extension GameScene {
     
+    /// Function within the scene to create the pilot.
+    /// - Returns: The main pilot.
     public func createPilot() -> SKSpriteNode {
         let pilot = Pilot(type: .pilot)
         
@@ -120,6 +122,9 @@ extension GameScene {
         
     }
     
+    
+    /// Function within the scene that returns a cloud.
+    /// - Returns: A Cloud.
     func createCloud() -> Cloud {
         
         let cloud: CloudAbove

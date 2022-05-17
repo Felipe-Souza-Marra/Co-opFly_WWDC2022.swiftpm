@@ -37,6 +37,10 @@ public class Pilot: SKSpriteNode, Aircraft {
         return audio
     }
     
+    /// The confirmation for the aircraft to continue with the correct action.
+    /// - Parameters:
+    ///   - type: The command type.
+    ///   - actived: String for checking the next change.
     public func executeAction(type: CommandType, actived: String) {
         
         guard let scene = self.scene as? GameScene else { return }

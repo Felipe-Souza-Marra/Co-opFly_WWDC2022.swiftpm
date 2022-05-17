@@ -7,6 +7,8 @@
 
 import SpriteKit
 
+//MARK: AutoLayout
+
 extension SKSpriteNode: AutoLayout {
     
     //Por enquanto sem nada para usar.

@@ -71,7 +71,14 @@ public class Transmission: SKSpriteNode {
         return bodyMessage
     }()
 
-
+    
+    /// Here will be constructor to initialize the message to be constructed.
+    /// - Parameters:
+    ///   - type: The Person who will talk (TypeTrasmisson).
+    ///   - message: The String that will be read by the transmission.
+    ///   - typeCommand: If it is any contain some command will be executed(up, down, left, right and pilot).
+    ///   - oldStates: Here you will get all the old states of the commands.
+    ///   - action: Function to execute if the whole message is read.
     public init(_ type :TypeTrasmisson, message: String, typeCommand: CommandType, oldStates: [CommandState], action: @escaping (() -> Void)) {
         
         self.oldStates = oldStates
@@ -121,6 +128,7 @@ public class Transmission: SKSpriteNode {
         
     }
     
+    /// Animation letter-by-letter..
     public func animateText() {
 
         self.bodyMessage.text?.append(message.removeFirst())
